@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 
 var indexRouter = require('./routes/index');
@@ -39,5 +40,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var mongoDB = 'mongodb+srv://amir:Hero2001@cluster0.p4xld.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB Connection Error:'));
 
 module.exports = app;
